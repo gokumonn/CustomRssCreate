@@ -11,11 +11,15 @@ ini_set('display_errors',1);
 require_once('/usr/local/include/php/libs/Smarty.class.php');
 //SimpleDomParserの読み込み
 include('./lib/simple_html_dom.php');
+include('./CustomRssData.php');
+//RSSの設定
+$rss_data=new CustomRssData("title","link","description");
+$rss_item=new Item();
+$rss_item->setTitle("");
+$rss_item->setLink("");
+$rss_item->setDescription("");
 
-$rss_data=new CustomRssCreate("title","link","description");
-$rss_data->setItemmTitle("");
-$rss_data->setItemLink("");
-$rss_data->setItemDescription("aaa");
+$rss_data->setItem($rss_item);
 
 
 $smarty=new Smarty();

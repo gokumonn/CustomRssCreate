@@ -6,24 +6,60 @@
  * Time: 18:24
  * To change this template use File | Settings | File Templates.
  */
+abstract class CustomCreateWriter{
+    public function HeaderWriter(){
 
 
+    }
+    
+
+    public function createRss(){
+        //ヘッダのタグ
+
+        //基本情報
+        //各アイテム
+        //フッタ
 
 
-
-interface ICustomRssItem{
-    public  function setItemTitle($title);
-    public  function setItemLink($link);
-    public  function setItemDescription($description);
-
+    }
 
 }
 
-class CustomRssData implements  ICustomRssItem{
+class Item{
+    private $title,$link,$description;
+
+    public function setTitle($title){
+        $this->title=$title;
+    }
+
+    public function setLink($link){
+        $this->link=$link;
+    }
+
+    public function setDescription($description){
+        $this->description=$description;
+
+    }
+
+    public function getTitle(){
+        return $this->title;
+    }
+
+    public function getLink(){
+        return $this->link;
+    }
+
+    public function getDescription(){
+        return $this->description;
+    }
+
+}
+
+class CustomRssData{
     //基本情報
     private $title,$link,$description;
     //各アイテム
-    private $item_title,$item_link,$item_description;
+    private $item;
     public function __construct($title,$link,$description){
         $this->title=$title;
         $this->link=$link;
@@ -31,20 +67,10 @@ class CustomRssData implements  ICustomRssItem{
 
     }
 
-    public function setItemTitle($title){
-        //Titleをスクレイピングする処理
-        $this->item_title=$title;
+    public function setItem($item){
+        //各アイテムをスクレイピングする処理
+        $this->item=$item;
 
-    }
-
-    public function setItemLink($link){
-        //Linkをスクレイピングする処理
-        $this->item_link=$link;
-    }
-
-    public function setItemDescription($description){
-        //Descriptionをスクレイピングする処理
-        $this->item_description=$description;
     }
 
 
