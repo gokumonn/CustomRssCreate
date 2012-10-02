@@ -6,30 +6,33 @@
  * Time: 10:42
  * To change this template use File | Settings | File Templates.
  */
-//SmartyのSetting
-ini_set('display_errors',1);
-require_once('/usr/local/include/php/libs/Smarty.class.php');
-//SimpleDomParserの読み込み
+
 include('./lib/simple_html_dom.php');
 include('./CustomRssData.php');
-//RSSの設定
+
+//RSS全体情報
 $rss_data=new CustomRssData("title","link","description");
-$rss_item=new Item();
-$rss_item->setTitle("");
-$rss_item->setLink("");
-$rss_item->setDescription("");
 
-$rss_data->setItem($rss_item);
+//URL指定
+$url="http://ritzlabo.com/";
 
+$rss_item=scrapeHtml($url);
+$rss_data->setRssItems($rss_item);
 
-$smarty=new Smarty();
-$smarty->template_dir  = '/var/www/html/concentration/temp/templates_c/';
-$smarty->compile_dir  = '/var/www/html/concentration/temp/templates_c/';
-$smarty->cache_dir    = '/var/www/html/concentration/temp/cache/';
-//Data assign
-$smarty->assign();
-$smarty->assign();
+//writerの生成
+$writer=new CustomCreateWriter($rss_data);
+$writer->createRss();
 
 
 
+//simple_html_dom_parserを使ったスクレイピング
+function scrapeHtml($html){
+    $items=array();
+    $item=new Item();
+    $item->setTitle("aa");
+    $item->setLink("bb");
+    $item->setDescription("cc");
+    $items[]=$item;
+    return $items;
+}
 ?>

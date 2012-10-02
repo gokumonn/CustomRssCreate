@@ -6,24 +6,59 @@
  * Time: 18:24
  * To change this template use File | Settings | File Templates.
  */
-abstract class CustomCreateWriter{
-    public function HeaderWriter(){
-
+class CustomCreateWriter{
+    private $whole_item;
+    public function __construct($item){
+        $this->whole_item=$item;
 
     }
-    
+    public function headerWriter(){
+        $header="<?xml version='1.0'?>";
+        $header.="<rss version='2.0'>";
+        $header.="<channel>";
+        return $header;
+    }
+    public function informationWriter(){
+        $info="<title>".$this->whole_item->getInfoTitle()."</title>";
+        $info.="<link>".$this->whole_item->getInfoLink()."</link>";
+        $info.="<description>".$this->whole_item->getInfoDescription()."</description>";
+        return $info;
+    }
+
+    public function itemWriter(){
+        $connect_item="";
+        foreach($this->whole_item->getRssItems() as $rss_item){
+            $connect_item.="<title>".$rss_item->getTitle()."</title>";
+            $connect_item.="<link>".$rss_item->getLink()."</link>";
+            $connect_item.="<description>".$rss_item->getDescription()."</description>";
+
+        }
+        return $connect_item;
+    }
+
+    public function footerWriter(){
+        $footer="</channel>";
+        $footer.="</rss>";
+        return $footer;
+    }
+
 
     public function createRss(){
-        //ヘッダのタグ
+        //連結
+        $rss=$this->headerWriter();
+        $rss.=$this->informationWriter();
+        $rss.=$this->itemWriter();
+        $rss.=$this->footerWriter();
 
-        //基本情報
-        //各アイテム
-        //フッタ
+
+        //test
+        echo $rss;
 
 
     }
 
 }
+
 
 class Item{
     private $title,$link,$description;
@@ -57,19 +92,36 @@ class Item{
 
 class CustomRssData{
     //基本情報
-    private $title,$link,$description;
+    private $info_title,$info_link,$info_description;
     //各アイテム
-    private $item;
+    private $rss_items;
     public function __construct($title,$link,$description){
-        $this->title=$title;
-        $this->link=$link;
-        $this->description=$description;
+        $this->info_title=$title;
+        $this->info_link=$link;
+        $this->info_description=$description;
 
     }
 
-    public function setItem($item){
+    public function getInfoTitle(){
+        return $this->info_title;
+    }
+
+    public function getInfoLink(){
+        return $this->info_link;
+    }
+
+    public function getInfoDescription(){
+        return $this->info_description;
+    }
+
+    public function getRssItems(){
+        return $this->rss_items;
+    }
+
+
+    public function setRssItems($item){
         //各アイテムをスクレイピングする処理
-        $this->item=$item;
+        $this->rss_items=$item;
 
     }
 
