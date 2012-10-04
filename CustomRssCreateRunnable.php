@@ -20,19 +20,23 @@ $rss_item=scrapeHtml($url);
 $rss_data->setRssItems($rss_item);
 
 //writerの生成
-$writer=new CustomCreateWriter($rss_data);
-$writer->createRss();
-
-
-
-//simple_html_dom_parserを使ったスクレイピング
-function scrapeHtml($html){
+function scrapeHtml($url){
     $items=array();
-    $item=new Item();
-    $item->setTitle("aa");
-    $item->setLink("bb");
-    $item->setDescription("cc");
-    $items[]=$item;
+    $html=file_get_html($url);
+    foreach($html->find('div[class=item_list list_ranking]') as $html_item){
+        $title=$html_item->find('div[class=tit]');
+        $link=$title->find('a href');
+        $description=$html_item->find('div[class=detail]');
+
+
+        $item=new Item();
+        $item->setTitle($title->plaintext);
+        $item->setLink($link->plaintext);
+        $item->setDescription($description->plaintext);
+        $items[]=$item;
+
+    }
+
     return $items;
 }
 ?>
