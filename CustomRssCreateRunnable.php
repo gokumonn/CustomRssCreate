@@ -20,6 +20,9 @@ $rss_item=scrapeHtml($url);
 $rss_data->setRssItems($rss_item);
 
 //writerの生成
+$writer=new CUstomCreateWriter($rss_data);
+$writer->createRss();
+
 function scrapeHtml($url){
     $items=array();
     $html=file_get_html($url);
