@@ -9,9 +9,12 @@
 class CustomCreateWriter extends FileWriter{
     private $whole_item;
     private $echo_str;
-    public function __construct($item,$write_str,$file_path){
-        parent::__construct($write_str,$file_path);
+    public function __construct($item,$file_path){
         $this->whole_item=$item;
+        //アイテムをrss出力の形に変換
+        $write_item=$this->translateRssString();
+        parent::__construct($write_item,$file_path);
+
 
 
 
@@ -46,23 +49,20 @@ class CustomCreateWriter extends FileWriter{
         return $footer;
     }
 
-
-    public function createRss(){
+    private function translateRssString(){
         //連結
         $rss=$this->headerWriter();
         $rss.=$this->informationWriter();
         $rss.=$this->itemWriter();
         $rss.=$this->footerWriter();
-        $this->echo_str=$rss;
 
+        return $rss;
 
+    }
+
+    public function createRss(){
         //ファイルに出力
-        parent::echoFile($this->echo_str);
-
-        //test
-        echo $rss;
-
-
+        parent::echoFile();
     }
 
 }

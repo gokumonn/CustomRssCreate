@@ -15,16 +15,11 @@ class FileWriter{
         $this->file_path=$file_path;
     }
 
-    public function echoFile($write_str){
+    public function echoFile(){
 
         if(!touch($this->file_path)){
             $fp=fopen($this->file_path,"w");
-            if($write_str==null ||$write_str==""){
-                fwrite($fp,$this->write_str);
-            }else{
-                fwrite($fp,$write_str);
-            }
-
+            fwrite($fp,$this->write_str);
             fclose($fp);
 
         }else{
