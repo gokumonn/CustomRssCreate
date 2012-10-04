@@ -6,10 +6,14 @@
  * Time: 18:24
  * To change this template use File | Settings | File Templates.
  */
-class CustomCreateWriter{
+class CustomCreateWriter extends FileWriter{
     private $whole_item;
-    public function __construct($item){
+    private $echo_str;
+    public function __construct($item,$write_str,$file_path){
+        parent::__construct($write_str,$file_path);
         $this->whole_item=$item;
+
+
 
     }
     public function headerWriter(){
@@ -49,7 +53,11 @@ class CustomCreateWriter{
         $rss.=$this->informationWriter();
         $rss.=$this->itemWriter();
         $rss.=$this->footerWriter();
+        $this->echo_str=$rss;
 
+
+        //ファイルに出力
+        parent::echoFile($this->echo_str);
 
         //test
         echo $rss;

@@ -9,7 +9,7 @@
 
 include('./lib/simple_html_dom.php');
 include('./CustomRssData.php');
-
+include('./FileControl.php');
 //RSS全体情報
 $rss_data=new CustomRssData("title","link","description");
 
@@ -20,7 +20,7 @@ $rss_item=scrapeHtml($url);
 $rss_data->setRssItems($rss_item);
 
 //writerの生成
-$writer=new CUstomCreateWriter($rss_data);
+$writer=new CustomCreateWriter($rss_data);
 $writer->createRss();
 
 function scrapeHtml($url){
