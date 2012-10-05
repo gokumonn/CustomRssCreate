@@ -6,6 +6,7 @@
  * Time: 18:24
  * To change this template use File | Settings | File Templates.
  */
+include('./FileControl.php');
 class CustomCreateWriter extends FileWriter{
     private $whole_item;
     private $echo_str;
@@ -35,10 +36,11 @@ class CustomCreateWriter extends FileWriter{
     public function itemWriter(){
         $connect_item="";
         foreach($this->whole_item->getRssItems() as $rss_item){
+            $connect_item.="<item>";
             $connect_item.="<title>".$rss_item->getTitle()."</title>";
             $connect_item.="<link>".$rss_item->getLink()."</link>";
             $connect_item.="<description>".$rss_item->getDescription()."</description>";
-
+            $connect_item.="</item>";
         }
         return $connect_item;
     }

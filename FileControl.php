@@ -23,6 +23,7 @@ class FileWriter{
             fclose($fp);
 
         }else{
+            echo $this->write_str;
             exit("ファイルが作成できません。");
 
         }

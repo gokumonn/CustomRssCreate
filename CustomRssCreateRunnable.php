@@ -9,13 +9,14 @@
 
 include('./lib/simple_html_dom.php');
 include('./CustomRssData.php');
-include('./FileControl.php');
+
 
 //RSS全体情報
 $rss_data=new CustomRssData("title","link","description");
 
 //スクレイピング&格納
 $rss_item=scrapeHtml();
+//var_dump($rss_item);
 $rss_data->setRssItems($rss_item);
 
 //writerの生成　$item:格納したアイテム,$file_path:作成するrssのファイル名またはパス
@@ -27,24 +28,27 @@ $writer->createRss();
 
 //スクレイピングして,Itemクラスに格納
 function scrapeHtml(){
-    $url="http://smartysmile.jp/";
+    $url="http://nivent.nicovideo.jp/";
     $items=array();
     $html=file_get_html($url);
-    foreach($html->find('div[class=item_list list_ranking]') as $html_item){
 
+    foreach($html->find('div[id=list] div[class=box clearfix]') as $html_item){
         //データの元
-        $title=$html_item->find('div[class=tit]');
-        $link=$title->find('a href');
-        $description=$html_item->find('div[class=detail]');
+        //var_dump($html_item);
+        $title=$html_item->find('div[class=infoUpper] strong');
+        $link=$html_item->find('div[class=infoUpper] strong a href');
+        $description=$html_item->innertext;
 
         //アイテムを格納
         $item=new Item();
-        $item->setTitle($title->plaintext);
-        $item->setLink($link->plaintext);
-        $item->setDescription($description->plaintext);
+        $item->setTitle($title);
+        $item->setLink($link);
+        $item->setDescription($description);
         $items[]=$item;
 
     }
+
+
 
     return $items;
 }
