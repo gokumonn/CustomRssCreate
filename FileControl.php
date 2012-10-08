@@ -17,13 +17,14 @@ class FileWriter{
 
     public function echoFile(){
 
-        if(!touch($this->file_path)){
+        if(touch($this->file_path)){
             $fp=fopen($this->file_path,"w");
             fwrite($fp,$this->write_str);
             fclose($fp);
-
+            echo("ファイルを作成しました。");
+            echo($this->write_str);
         }else{
-            echo $this->write_str;
+            //echo $this->write_str;
             exit("ファイルが作成できません。");
 
         }
